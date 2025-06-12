@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 )
 
 const (
@@ -13,6 +14,16 @@ const (
 	JPY = 157.45
 )
 
+func init() {
+	hour := time.Now().Hour()
+	if hour < 12 {
+		fmt.Println("Good Morning!")
+	} else if hour < 18 {
+		fmt.Println("Good Afternoon!")
+	} else {
+		fmt.Println("Good Evening!")
+	}
+}
 func validateInput(args []string) (float64, string, string, error) {
 
 	if len(args) != 4 {
@@ -77,7 +88,9 @@ func convertCurrency(amount float64, from, to string) (float64, error) {
 }
 
 func main() {
+
 	amount, from, to, err := validateInput(os.Args)
+
 	if err != nil {
 		fmt.Println(err)
 		return

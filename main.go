@@ -65,6 +65,6 @@ func main() {
 		fmt.Printf("ERROR percentage: %.2f%%\n", float64(errorCount)/float64(totalLines)*100)
 	}
 
-	// Bonus: Add time-based message
+	// Added time-based message
 	fmt.Printf("\nAnalyzed at: %s\n", time.Now().Format("2025-06-12 15:04:05"))
 }

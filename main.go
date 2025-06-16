@@ -9,7 +9,7 @@ import (
 )
 
 // Task represents a single unit of work with a unique identifier,
-// a descriptive string, and a completion status.
+// a descriptive string, and a completion status...
 type Task struct {
 	ID          int
 	Description string

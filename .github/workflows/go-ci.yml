@@ -1,7 +1,7 @@
-# Name of your workflow
+
 name: Go CI for main.go
 
-# When the workflow will run
+
 on:
   push:
     branches:

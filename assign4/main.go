@@ -1,66 +1,77 @@
 package main
 
 import (
-	"bufio"   // For robust line reading from standard input
-	"fmt"     // For formatted I/O (printing and reading)
-	"os"      // For standard input/output streams
-	"strconv" // For converting string to int
-	"strings" // For string manipulation like trimming whitespace
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
 )
 
-// Task represents a single task in our tracker.
+// Task represents a single unit of work with a unique identifier,
+// a descriptive string, and a completion status.
 type Task struct {
-	ID          int    // Unique identifier for the task
-	Description string // Description of the task
-	Completed   bool   // Status: true if completed, false otherwise (pending)
+	ID          int
+	Description string
+	Completed   bool
 }
 
-// TaskTracker manages the collection of tasks and generates unique IDs.
+// TaskTracker manages a collection of tasks, providing functionalities
+// to add, list, and mark tasks as complete. It also handles the generation
+// of unique task IDs.
 type TaskTracker struct {
-	tasks     []Task     // Slice to store all tasks (both pending and completed)
-	nextIDGen func() int // Function closure to generate unique task IDs
+	tasks     []Task
+	nextIDGen func() int
 }
 
-// idGenerator is a closure that generates unique sequential integer IDs.
-// It encapsulates the 'id' counter, so it's not a global variable.
+// idGenerator returns a closure that produces unique, sequential integer IDs
+// starting from 1.
+//
+// Returns:
+//   func() int: A function that, when called, returns the next unique integer ID.
 func idGenerator() func() int {
-	id := 0 // The 'id' variable is closed over by the returned function.
+	id := 0
 	return func() int {
-		id++ // Increment 'id' each time the returned function is called.
+		id++
 		return id
 	}
 }
 
 // NewTaskTracker creates and initializes a new TaskTracker instance.
-// It also sets up the unique ID generator.
+//
+// Returns:
+//   *TaskTracker: A pointer to a newly created and initialized TaskTracker.
 func NewTaskTracker() *TaskTracker {
 	return &TaskTracker{
-		tasks:     []Task{},      // Initialize an empty slice of tasks
-		nextIDGen: idGenerator(), // Assign the closure to generate IDs
+		tasks:     []Task{},
+		nextIDGen: idGenerator(),
 	}
 }
 
-// AddTask adds a new task to the tracker.
-// It uses a pointer receiver (*TaskTracker) because it modifies the TaskTracker's state (its 'tasks' slice).
+// AddTask appends a new task with the given description to the tracker.
+// The task is assigned a unique ID and initialized as incomplete.
+//
+// Parameters:
+//   description (string): The textual description of the task to be added.
 func (tt *TaskTracker) AddTask(description string) {
-	newID := tt.nextIDGen() // Get a unique ID from the closure
+	newID := tt.nextIDGen()
 	newTask := Task{
 		ID:          newID,
 		Description: description,
-		Completed:   false, // New tasks are always pending
+		Completed:   false,
 	}
-	tt.tasks = append(tt.tasks, newTask) // Add the new task to the slice
+	tt.tasks = append(tt.tasks, newTask)
 	fmt.Printf("Task Added: %d - %s\n", newTask.ID, newTask.Description)
 }
 
-// ListTasks displays all pending tasks.
-// It uses a pointer receiver (*TaskTracker) because it operates on the TaskTracker's 'tasks' slice,
-// even though it doesn't modify it directly in this function (good practice for methods operating on collections).
+// ListTasks iterates through all tasks managed by the tracker and
+// prints only those that are currently incomplete to standard output.
+// If no pending tasks are found, a corresponding message is displayed.
 func (tt *TaskTracker) ListTasks() {
 	fmt.Println("\nPending Tasks:")
 	foundPending := false
-	for _, task := range tt.tasks { // Iterate through all tasks
-		if !task.Completed { // Only print tasks that are not completed
+	for _, task := range tt.tasks {
+		if !task.Completed {
 			fmt.Printf("%d: %s\n", task.ID, task.Description)
 			foundPending = true
 		}
@@ -70,20 +81,24 @@ func (tt *TaskTracker) ListTasks() {
 	}
 }
 
-// CompleteTask marks a task as completed given its ID.
-// It uses a pointer receiver (*TaskTracker) because it modifies the state of a Task within the tracker's slice.
+// CompleteTask marks the task with the specified ID as completed.
+// If the task is not found or is already completed, appropriate messages
+// are displayed to standard output.
+//
+// Parameters:
+//   id (int): The unique identifier of the task to be marked as completed.
 func (tt *TaskTracker) CompleteTask(id int) {
 	taskFound := false
-	for i := range tt.tasks { // Iterate using index to allow modification
+	for i := range tt.tasks {
 		if tt.tasks[i].ID == id {
 			if tt.tasks[i].Completed {
 				fmt.Printf("Task %d is already completed.\n", id)
 			} else {
-				tt.tasks[i].Completed = true // Mark as completed
+				tt.tasks[i].Completed = true
 				fmt.Printf("Marking task %d as completed: %s\n", id, tt.tasks[i].Description)
 			}
 			taskFound = true
-			break // Exit loop once task is found and updated
+			break
 		}
 	}
 	if !taskFound {
@@ -91,7 +106,8 @@ func (tt *TaskTracker) CompleteTask(id int) {
 	}
 }
 
-// displayMenu prints the interactive menu options to the console.
+// displayMenu presents the user with the available options for interacting
+// with the task tracker application by printing them to standard output.
 func displayMenu() {
 	fmt.Println("\n--- Personal Task Tracker ---")
 	fmt.Println("1. Add a new task")
@@ -101,29 +117,35 @@ func displayMenu() {
 	fmt.Print("Choose an option: ")
 }
 
-// getUserInput reads a line of text from the standard input.
+// getUserInput reads a single line of text from standard input,
+// trims leading/trailing whitespace, and returns the resulting string.
+//
+// Returns:
+//   string: The trimmed string input from the user.
 func getUserInput() string {
 	reader := bufio.NewReader(os.Stdin)
-	input, _ := reader.ReadString('\n') // Read until newline
-	return strings.TrimSpace(input)     // Remove leading/trailing whitespace, including newline
+	input, _ := reader.ReadString('\n')
+	return strings.TrimSpace(input)
 }
 
-// main function orchestrates the CLI interaction.
+// main is the entry point of the Task Tracker application.
+// It initializes a new TaskTracker and enters a loop to display the menu,
+// process user input, and perform the requested task operations until
+// the user chooses to exit.
 func main() {
-	tracker := NewTaskTracker() // Create a new instance of the TaskTracker
+	tracker := NewTaskTracker()
 
-	// Main application loop
 	for {
 		displayMenu()
 		choiceStr := getUserInput()
-		choice, err := strconv.Atoi(choiceStr) // Convert user input to an integer
+		choice, err := strconv.Atoi(choiceStr)
 		if err != nil {
 			fmt.Println("Invalid choice. Please enter a number between 1 and 4.")
-			continue // Skip to next loop iteration
+			continue
 		}
 
 		switch choice {
-		case 1: // Add Task
+		case 1:
 			fmt.Print("Enter task description: ")
 			description := getUserInput()
 			if description == "" {
@@ -131,9 +153,9 @@ func main() {
 				continue
 			}
 			tracker.AddTask(description)
-		case 2: // List Tasks
+		case 2:
 			tracker.ListTasks()
-		case 3: // Complete Task
+		case 3:
 			fmt.Print("Enter ID of task to mark as completed: ")
 			idStr := getUserInput()
 			id, err := strconv.Atoi(idStr)
@@ -142,10 +164,10 @@ func main() {
 				continue
 			}
 			tracker.CompleteTask(id)
-		case 4: // Exit
+		case 4:
 			fmt.Println("Exiting Task Tracker. Goodbye!")
-			return // Exit the main function, terminating the program
-		default: // Invalid option
+			return
+		default:
 			fmt.Println("Invalid option. Please choose a number between 1 and 4.")
 		}
 	}

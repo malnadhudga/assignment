@@ -1,3 +1,3 @@
-module https://github.com/malnadhudga/assignment
+module assignment
 
 go 1.24

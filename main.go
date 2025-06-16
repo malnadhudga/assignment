@@ -1,3 +1,7 @@
 package main
 
-//this is the main file
+import "fmt"
+
+func main() {
+	fmt.Println("Hello from my Go application!")
+}

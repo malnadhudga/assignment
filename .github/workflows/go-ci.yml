@@ -1,6 +1,4 @@
-
 name: Go CI for main.go
-
 
 on:
   push:

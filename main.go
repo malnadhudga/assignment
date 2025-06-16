@@ -28,7 +28,8 @@ type TaskTracker struct {
 // starting from 1.
 //
 // Returns:
-//   func() int: A function that, when called, returns the next unique integer ID.
+//
+//	func() int: A function that, when called, returns the next unique integer ID.
 func idGenerator() func() int {
 	id := 0
 	return func() int {
@@ -40,7 +41,8 @@ func idGenerator() func() int {
 // NewTaskTracker creates and initializes a new TaskTracker instance.
 //
 // Returns:
-//   *TaskTracker: A pointer to a newly created and initialized TaskTracker.
+//
+//	*TaskTracker: A pointer to a newly created and initialized TaskTracker.
 func NewTaskTracker() *TaskTracker {
 	return &TaskTracker{
 		tasks:     []Task{},
@@ -52,7 +54,8 @@ func NewTaskTracker() *TaskTracker {
 // The task is assigned a unique ID and initialized as incomplete.
 //
 // Parameters:
-//   description (string): The textual description of the task to be added.
+//
+//	description (string): The textual description of the task to be added.
 func (tt *TaskTracker) AddTask(description string) {
 	newID := tt.nextIDGen()
 	newTask := Task{
@@ -86,7 +89,8 @@ func (tt *TaskTracker) ListTasks() {
 // are displayed to standard output.
 //
 // Parameters:
-//   id (int): The unique identifier of the task to be marked as completed.
+//
+//	id (int): The unique identifier of the task to be marked as completed.
 func (tt *TaskTracker) CompleteTask(id int) {
 	taskFound := false
 	for i := range tt.tasks {
@@ -121,7 +125,8 @@ func displayMenu() {
 // trims leading/trailing whitespace, and returns the resulting string.
 //
 // Returns:
-//   string: The trimmed string input from the user.
+//
+//	string: The trimmed string input from the user.
 func getUserInput() string {
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')

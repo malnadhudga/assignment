@@ -1,85 +1,152 @@
 package main
 
-import "fmt"
+import (
+	"bufio"   // For robust line reading from standard input
+	"fmt"     // For formatted I/O (printing and reading)
+	"os"      // For standard input/output streams
+	"strconv" // For converting string to int
+	"strings" // For string manipulation like trimming whitespace
+)
 
-type BankAccount struct {
-	Owner   string
-	Balance float64
+// Task represents a single task in our tracker.
+type Task struct {
+	ID          int    // Unique identifier for the task
+	Description string // Description of the task
+	Completed   bool   // Status: true if completed, false otherwise (pending)
 }
 
-// DisplayBalance uses a value receiver. This means it operates on a copy
-// of the BankAccount. Any modifications to 'b' within this method would
-// not affect the original variable. This is suitable for methods that
-// only read data.
-func (b BankAccount) DisplayBalance() {
-	fmt.Printf("%s's current balance: $%.2f\n", b.Owner, b.Balance)
+// TaskTracker manages the collection of tasks and generates unique IDs.
+type TaskTracker struct {
+	tasks     []Task     // Slice to store all tasks (both pending and completed)
+	nextIDGen func() int // Function closure to generate unique task IDs
 }
 
-// Deposit uses a pointer receiver (*BankAccount). This allows the method
-// to modify the original BankAccount variable directly. This is essential
-// for methods that need to change the state of the receiver, like updating
-// the balance.
-func (b *BankAccount) Deposit(amount float64) {
-	if amount <= 0 {
-		fmt.Printf("Deposit amount must be positive. Skipping deposit of $%.2f.\n", amount)
-		return
-	}
-	b.Balance += amount // Modifies the actual BankAccount's balance
-	fmt.Printf("Deposited $%.2f. New balance: $%.2f\n", amount, b.Balance)
-}
-
-// Withdraw uses a pointer receiver (*BankAccount). Similar to Deposit,
-// it can directly modify the account's balance. It also includes logic
-// to prevent withdrawals that would result in a negative balance.
-func (b *BankAccount) Withdraw(amount float64) {
-	if amount <= 0 {
-		fmt.Printf("Withdrawal amount must be positive. Skipping withdrawal of $%.2f.\n", amount)
-		return
-	}
-	if b.Balance >= amount {
-		b.Balance -= amount // Modifies the actual BankAccount's balance
-		fmt.Printf("Withdrew $%.2f. New balance: $%.2f\n", amount, b.Balance)
-	} else {
-		fmt.Printf("Insufficient funds for withdrawal of $%.2f. Current balance: $%.2f.\n", amount, b.Balance)
+// idGenerator is a closure that generates unique sequential integer IDs.
+// It encapsulates the 'id' counter, so it's not a global variable.
+func idGenerator() func() int {
+	id := 0 // The 'id' variable is closed over by the returned function.
+	return func() int {
+		id++ // Increment 'id' each time the returned function is called.
+		return id
 	}
 }
 
-// TryToModifyBalance is a function demonstrating pass-by-value. When
-// a BankAccount is passed to this function, only a copy is made.
-// Therefore, any changes made to 'b' inside this function will not
-// impact the original variable outside of it.
-func TryToModifyBalance(b BankAccount, amount float64) {
-	b.Balance += amount // Only modifies the copy of BankAccount
-	fmt.Printf("   (Inside TryToModifyBalance func): Balance changed to $%.2f\n", b.Balance)
+// NewTaskTracker creates and initializes a new TaskTracker instance.
+// It also sets up the unique ID generator.
+func NewTaskTracker() *TaskTracker {
+	return &TaskTracker{
+		tasks:     []Task{},      // Initialize an empty slice of tasks
+		nextIDGen: idGenerator(), // Assign the closure to generate IDs
+	}
 }
 
+// AddTask adds a new task to the tracker.
+// It uses a pointer receiver (*TaskTracker) because it modifies the TaskTracker's state (its 'tasks' slice).
+func (tt *TaskTracker) AddTask(description string) {
+	newID := tt.nextIDGen() // Get a unique ID from the closure
+	newTask := Task{
+		ID:          newID,
+		Description: description,
+		Completed:   false, // New tasks are always pending
+	}
+	tt.tasks = append(tt.tasks, newTask) // Add the new task to the slice
+	fmt.Printf("Task Added: %d - %s\n", newTask.ID, newTask.Description)
+}
+
+// ListTasks displays all pending tasks.
+// It uses a pointer receiver (*TaskTracker) because it operates on the TaskTracker's 'tasks' slice,
+// even though it doesn't modify it directly in this function (good practice for methods operating on collections).
+func (tt *TaskTracker) ListTasks() {
+	fmt.Println("\nPending Tasks:")
+	foundPending := false
+	for _, task := range tt.tasks { // Iterate through all tasks
+		if !task.Completed { // Only print tasks that are not completed
+			fmt.Printf("%d: %s\n", task.ID, task.Description)
+			foundPending = true
+		}
+	}
+	if !foundPending {
+		fmt.Println("No pending tasks.")
+	}
+}
+
+// CompleteTask marks a task as completed given its ID.
+// It uses a pointer receiver (*TaskTracker) because it modifies the state of a Task within the tracker's slice.
+func (tt *TaskTracker) CompleteTask(id int) {
+	taskFound := false
+	for i := range tt.tasks { // Iterate using index to allow modification
+		if tt.tasks[i].ID == id {
+			if tt.tasks[i].Completed {
+				fmt.Printf("Task %d is already completed.\n", id)
+			} else {
+				tt.tasks[i].Completed = true // Mark as completed
+				fmt.Printf("Marking task %d as completed: %s\n", id, tt.tasks[i].Description)
+			}
+			taskFound = true
+			break // Exit loop once task is found and updated
+		}
+	}
+	if !taskFound {
+		fmt.Printf("Task with ID %d not found.\n", id)
+	}
+}
+
+// displayMenu prints the interactive menu options to the console.
+func displayMenu() {
+	fmt.Println("\n--- Personal Task Tracker ---")
+	fmt.Println("1. Add a new task")
+	fmt.Println("2. List all pending tasks")
+	fmt.Println("3. Mark a task as completed")
+	fmt.Println("4. Exit")
+	fmt.Print("Choose an option: ")
+}
+
+// getUserInput reads a line of text from the standard input.
+func getUserInput() string {
+	reader := bufio.NewReader(os.Stdin)
+	input, _ := reader.ReadString('\n') // Read until newline
+	return strings.TrimSpace(input)     // Remove leading/trailing whitespace, including newline
+}
+
+// main function orchestrates the CLI interaction.
 func main() {
-	fmt.Println("--- Bank Account System Demonstration ---")
+	tracker := NewTaskTracker() // Create a new instance of the TaskTracker
 
-	myAccount := BankAccount{
-		Owner:   "Alice",
-		Balance: 100.00, // Initial balance
+	// Main application loop
+	for {
+		displayMenu()
+		choiceStr := getUserInput()
+		choice, err := strconv.Atoi(choiceStr) // Convert user input to an integer
+		if err != nil {
+			fmt.Println("Invalid choice. Please enter a number between 1 and 4.")
+			continue // Skip to next loop iteration
+		}
+
+		switch choice {
+		case 1: // Add Task
+			fmt.Print("Enter task description: ")
+			description := getUserInput()
+			if description == "" {
+				fmt.Println("Task description cannot be empty.")
+				continue
+			}
+			tracker.AddTask(description)
+		case 2: // List Tasks
+			tracker.ListTasks()
+		case 3: // Complete Task
+			fmt.Print("Enter ID of task to mark as completed: ")
+			idStr := getUserInput()
+			id, err := strconv.Atoi(idStr)
+			if err != nil {
+				fmt.Println("Invalid ID. Please enter a valid number.")
+				continue
+			}
+			tracker.CompleteTask(id)
+		case 4: // Exit
+			fmt.Println("Exiting Task Tracker. Goodbye!")
+			return // Exit the main function, terminating the program
+		default: // Invalid option
+			fmt.Println("Invalid option. Please choose a number between 1 and 4.")
+		}
 	}
-	fmt.Println("\n--- Initial State ---")
-	myAccount.DisplayBalance()
-	fmt.Println("\n--- Deposit Funds ---")
-	myAccount.Deposit(50.50)
-	myAccount.DisplayBalance() // Observe the change
-	fmt.Println("\n--- Attempting Withdrawals ---")
-	myAccount.Withdraw(25.00)
-	myAccount.DisplayBalance()
-	myAccount.Withdraw(200.00)
-	myAccount.DisplayBalance()
-
-	fmt.Println("\n--- Final State ---")
-	myAccount.DisplayBalance()
-	fmt.Println("\n--- Demonstrating Value Receiver vs. Pointer Receiver Effect ---")
-	tempAccount := BankAccount{Owner: "Bob", Balance: 50.00}
-	fmt.Printf("Bob's balance BEFORE TryToModifyBalance: $%.2f\n", tempAccount.Balance)
-	TryToModifyBalance(tempAccount, 20.00) // Pass by value
-	fmt.Printf("Bob's balance AFTER TryToModifyBalance: $%.2f (Did not change externally)\n", tempAccount.Balance)
-
-	fmt.Printf("Alice's balance BEFORE Deposit (again): $%.2f\n", myAccount.Balance)
-	myAccount.Deposit(10.00) // This actually modifies myAccount
-	fmt.Printf("Alice's balance AFTER Deposit (again): $%.2f (Changed externally)\n", myAccount.Balance)
 }

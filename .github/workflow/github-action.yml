@@ -1,4 +1,4 @@
-name: Go CI for main.go
+name: Go main.go
 
 on:
   push:

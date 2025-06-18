@@ -32,6 +32,17 @@ func calArea(s Shape) float64 {
 	return s.Area()
 }
 
+func costs(s Shape) float64 {
+	switch s.(type) {
+	case square:
+		return s.Area() * 100
+	case rectangle:
+		return s.Area() * 20
+	default:
+		return s.Area()
+	}
+}
+
 func main() {
 
 	rect := rectangle{b: 10, l: 20}
@@ -43,4 +54,10 @@ func main() {
 	sq := square{l: 10}
 	squareArea := calArea(sq)
 	fmt.Printf("Area of square: %.2f\n", squareArea)
+
+	cost := costs(sq)
+	fmt.Printf("Cost of square: %.2f\n", cost)
+
+	cost = costs(rect)
+	fmt.Printf("Cost of recct: %.2f\n", cost)
 }

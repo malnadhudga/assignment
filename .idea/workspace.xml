@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed75f871-d04c-4e80-b59b-bdd6ea65a2dc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/github-action.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assign2/assignment_day2.go" beforeDir="false" afterPath="$PROJECT_DIR$/assign1/assignment_day1.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assign3/assignment_3.go" beforeDir="false" afterPath="$PROJECT_DIR$/assign2/assignment_2.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assign3/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/assign2/log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assign4/assignment4.go" beforeDir="false" afterPath="$PROJECT_DIR$/assign3/assignment3.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/june17.go" beforeDir="false" afterPath="$PROJECT_DIR$/assignment4.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,11 +64,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/assign4" />
       <recent name="$PROJECT_DIR$/assign6" />
       <recent name="$PROJECT_DIR$/assign5" />
-      <recent name="$PROJECT_DIR$/assign4" />
       <recent name="$PROJECT_DIR$/assign2" />
-      <recent name="$PROJECT_DIR$/assign3" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build assignment/assign6">

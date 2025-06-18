@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// Shape is an interface that defines the Area method.
+// Shape is an interface that defines the Area method .
 type Shape interface {
 	Area() float64
 }

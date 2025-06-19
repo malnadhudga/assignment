@@ -40,9 +40,9 @@ func NewTaskTracker() *TaskTracker {
 	}
 }
 
-// AddTask adds a new task to the tracker.
+// AddTask adds a new task to the tracker and returns the added Task.
 // It uses a pointer receiver (*TaskTracker) because it modifies the TaskTracker's state (its 'tasks' slice).
-func (tt *TaskTracker) AddTask(description string) {
+func (tt *TaskTracker) AddTask(description string) Task {
 	newID := tt.nextIDGen()
 	newTask := Task{
 		ID:          newID,
@@ -50,45 +50,42 @@ func (tt *TaskTracker) AddTask(description string) {
 		Completed:   false,
 	}
 	tt.tasks = append(tt.tasks, newTask)
-	fmt.Printf("Task Added: %d - %s\n", newTask.ID, newTask.Description)
+	return newTask
 }
 
 // ListTasks displays all pending tasks.
 // It uses a pointer receiver (*TaskTracker) because it operates on the TaskTracker's 'tasks' slice,
 // even though it doesn't modify it directly in this function (good practice for methods operating on collections).
-func (tt *TaskTracker) ListTasks() {
-	fmt.Println("\nPending Tasks:")
+func (tt *TaskTracker) ListTasks() string {
+	s := "Pending Tasks:\n"
 	foundPending := false
 	for _, task := range tt.tasks {
 		if !task.Completed {
-			fmt.Printf("%d: %s\n", task.ID, task.Description)
+			s += fmt.Sprintf("%d: %s\n", task.ID, task.Description)
 			foundPending = true
 		}
 	}
 	if !foundPending {
-		fmt.Println("No pending tasks.")
+		s += "No pending tasks."
 	}
+	return s
 }
 
 // CompleteTask marks a task as completed given its ID.
+// It returns a boolean indicating if the task was found and its completion status was changed,
+// and a string message describing the outcome.
 // It uses a pointer receiver (*TaskTracker) because it modifies the state of a Task within the tracker's slice.
-func (tt *TaskTracker) CompleteTask(id int) {
-	taskFound := false
+func (tt *TaskTracker) CompleteTask(id int) (bool, string) {
 	for i := range tt.tasks {
 		if tt.tasks[i].ID == id {
 			if tt.tasks[i].Completed {
-				fmt.Printf("Task %d is already completed.\n", id)
-			} else {
-				tt.tasks[i].Completed = true
-				fmt.Printf("Marking task %d as completed: %s\n", id, tt.tasks[i].Description)
+				return false, fmt.Sprintf("Task %d is already completed.", id)
 			}
-			taskFound = true
-			break
+			tt.tasks[i].Completed = true
+			return true, fmt.Sprintf("Marking task %d as completed: %s", id, tt.tasks[i].Description)
 		}
 	}
-	if !taskFound {
-		fmt.Printf("Task with ID %d not found.\n", id)
-	}
+	return false, fmt.Sprintf("Task with ID %d not found.", id)
 }
 
 // displayMenu prints the interactive menu options to the console.
@@ -129,9 +126,10 @@ func main() {
 				fmt.Println("Task description cannot be empty.")
 				continue
 			}
-			tracker.AddTask(description)
+			addedTask := tracker.AddTask(description)
+			fmt.Printf("Task Added: %d - %s\n", addedTask.ID, addedTask.Description)
 		case 2:
-			tracker.ListTasks()
+			fmt.Println(tracker.ListTasks())
 		case 3:
 			fmt.Print("Enter ID of task to mark as completed: ")
 			idStr := getUserInput()
@@ -140,7 +138,8 @@ func main() {
 				fmt.Println("Invalid ID. Please enter a valid number.")
 				continue
 			}
-			tracker.CompleteTask(id)
+			_, msg := tracker.CompleteTask(id)
+			fmt.Println(msg)
 		case 4:
 			fmt.Println("Exiting Task Tracker. Goodbye!")
 			return

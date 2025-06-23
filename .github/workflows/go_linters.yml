@@ -2,7 +2,7 @@ name: Run LINTERS when pushed
 
 on:
   push:
-    branches: ["main"]
+    branches: ["assign_7"]
 
 jobs:
   push_and_check_linters:

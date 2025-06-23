@@ -33,6 +33,7 @@ func httpmark(w http.ResponseWriter, r *http.Request, tracker *TaskTracker) {
 	}
 
 	_, message := tracker.CompleteTask(id)
+	//fmt.Sprintf(message)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(message))
 	return
@@ -58,56 +59,49 @@ func httppostTask(w http.ResponseWriter, r *http.Request, tracker *TaskTracker) 
 func httpListtask(w http.ResponseWriter, r *http.Request, tracker *TaskTracker) {
 	tasks := tracker.ListTasks()
 
+	//fmt.Sprintf(tasks)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(tasks))
 	return
 }
 
 func httpDelete(w http.ResponseWriter, r *http.Request, tracker *TaskTracker) {
+
 	queryValues := r.URL.Query()
 	idStr := queryValues.Get("id")
 
 	if idStr == "" {
+		//w.Write([]byte("give the ID"))
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("give the ID"))
 		return
 	}
 
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("Invalid ID format"))
 		return
 	}
 
 	if id > len(tracker.tasks) || id <= 0 {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("Please Enter a valid ID within range"))
+		w.Write([]byte("Please Enter the valid ID"))
+
 		return
 	}
 
-	indexToDelete := id - 1
-
-	if indexToDelete >= 0 && indexToDelete < len(tracker.tasks) {
-
-		if len(tracker.tasks) == 1 {
-			tracker.tasks = []Task{}
-		} else {
-
-			tracker.tasks = append(tracker.tasks[:indexToDelete], tracker.tasks[indexToDelete+1:]...)
-		}
-	} else {
-
-		http.Error(w, "Task not found for deletion", http.StatusNotFound) // Use 404 for not found
-		return
-	}
+	id = id - 1
+	t1 := tracker.tasks[:id]
+	t2 := tracker.tasks[id+1:]
+	tracker.tasks = append(t1, t2...)
 
 	tasks := tracker.ListTasks()
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Task deleted successfully. Updated list:\n" + tasks))
 
+	//fmt.Sprintf(tasks)
+	w.WriteHeader(http.StatusNoContent) //Added the status code
+	w.Write([]byte(tasks))
 	return
 }
+
 func httpListbyId(w http.ResponseWriter, r *http.Request, tracker *TaskTracker) {
 
 	idstr := r.PathValue("id")
@@ -128,6 +122,7 @@ func httpListbyId(w http.ResponseWriter, r *http.Request, tracker *TaskTracker) 
 	for _, task := range tracker.tasks {
 		if id == task.ID {
 			flag = true
+			//fmt.Sprintf(task.Description)
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte(task.Description))
 			return

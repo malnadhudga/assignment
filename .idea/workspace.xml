@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed75f871-d04c-4e80-b59b-bdd6ea65a2dc" name="Changes" comment="" />
+    <list default="true" id="ed75f871-d04c-4e80-b59b-bdd6ea65a2dc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/go_linters.yml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

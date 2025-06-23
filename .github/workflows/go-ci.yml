@@ -3,7 +3,7 @@ name: Go CI for main.go
 on:
   push:
     branches:
-      - main # Run on pushes to the main branch
+      -  # Run on pushes to the main branch
   pull_request:
     branches:
       - main # Run on pull requests targeting the main branch

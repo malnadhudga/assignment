@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed75f871-d04c-4e80-b59b-bdd6ea65a2dc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/go_linters.yml" beforeDir="false" />
-    </list>
+    <list default="true" id="ed75f871-d04c-4e80-b59b-bdd6ea65a2dc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,38 +34,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;Go Test.TestCosts in assignment/assign5/assign5_1.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.GoLinterPluginOnboarding&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.GoLinterPluginStorageMigration&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/zopdev/GolandProjects/assignment&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build assignment/http_test.executor": "Run",
+    "Go Test.TestCosts in assignment/assign5/assign5_1.executor": "Run",
+    "Go Test.TestGet in assignment/http_test.executor": "Run",
+    "Go Test.TestPost in assignment/http_test.executor": "Run",
+    "Go Test.TestPut in assignment/http_test.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.GoLinterPluginOnboarding": "true",
+    "RunOnceActivity.GoLinterPluginStorageMigration": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "linters",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/Users/zopdev/GolandProjects/assignment",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/package1" />
       <recent name="$PROJECT_DIR$/assign5/assign5_3" />
       <recent name="$PROJECT_DIR$/assign5/assign5_2" />
       <recent name="$PROJECT_DIR$/assign5/assign5_1" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/assign5" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestCosts in assignment/assign5/assign5_1">
+  <component name="RunManager" selected="Go Test.TestPut in assignment/http_test">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="assignment" />
       <working_directory value="$PROJECT_DIR$" />
@@ -77,22 +79,13 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <configuration name="go build assignment" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+    <configuration name="go build assignment/http_test" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="assignment" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="assignment" />
+      <package value="assignment/http_test" />
       <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/assign_6_1.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build assignment/assign6" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="assignment" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="assignment/assign6" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/assign6/assign_6_1.go" />
+      <filePath value="$PROJECT_DIR$/http_test/http_api.go" />
       <method v="2" />
     </configuration>
     <configuration name="TestCosts in assignment/assign5/assign5_1" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -107,6 +100,42 @@
       <pattern value="^\QTestCosts\E$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestGet in assignment/http_test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="assignment" />
+      <working_directory value="$PROJECT_DIR$/http_test" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="assignment/http_test" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestGet\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestPost in assignment/http_test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="assignment" />
+      <working_directory value="$PROJECT_DIR$/http_test" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="assignment/http_test" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestPost\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestPut in assignment/http_test" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="assignment" />
+      <working_directory value="$PROJECT_DIR$/http_test" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="assignment/http_test" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestPut\E$" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
       <module name="assignment" />
       <working_directory value="$PROJECT_DIR$" />
@@ -118,9 +147,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestPut in assignment/http_test" />
+        <item itemvalue="Go Build.go build assignment/http_test" />
+        <item itemvalue="Go Test.TestPost in assignment/http_test" />
+        <item itemvalue="Go Test.TestGet in assignment/http_test" />
         <item itemvalue="Go Test.TestCosts in assignment/assign5/assign5_1" />
-        <item itemvalue="Go Build.go build assignment/assign6" />
-        <item itemvalue="Go Build.go build assignment" />
       </list>
     </recent_temporary>
   </component>

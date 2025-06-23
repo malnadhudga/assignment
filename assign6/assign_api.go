@@ -304,6 +304,6 @@ func main() {
 	err := server.ListenAndServe()
 
 	if err != nil && !errors.Is(err, http.ErrServerClosed) {
-		log.Fatalf("Server failed to start: %v", err)
+		log.Fatalf("Server failed to  start: %v", err)
 	}
 }

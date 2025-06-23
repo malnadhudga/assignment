@@ -61,6 +61,7 @@ func httpmark(w http.ResponseWriter, r *http.Request, tracker *TaskTracker) {
 
 func httppostTask(w http.ResponseWriter, r *http.Request, tracker *TaskTracker) {
 	queryValues := r.URL.Query()
+
 	task := queryValues.Get("task")
 
 	if task == "" {
@@ -220,7 +221,7 @@ func idGenerator() func() int {
 	}
 }
 
-// NewTaskTracker creates and initializes a new TaskTracker instance.
+// NewTaskTracker creates and initializes a new TaskTracker instance .
 // It also sets up the unique ID generator.
 func NewTaskTracker() *TaskTracker {
 	return &TaskTracker{

@@ -237,49 +237,6 @@ func getUserInput() string {
 func main() {
 	tracker := NewTaskTracker()
 
-	for {
-		displayMenu()
-		choiceStr := getUserInput()
-		choice, err := strconv.Atoi(choiceStr)
-		if err != nil {
-			fmt.Println("Invalid choice. Please enter a number between 1 and 4.")
-			continue
-		}
-
-		if choice == 4 {
-			fmt.Println("Exiting Task Tracker. Goodbye!")
-			break
-		}
-
-		switch choice {
-		case 1:
-			fmt.Print("Enter task description: ")
-			description := getUserInput()
-			if description == "" {
-				fmt.Println("Task description cannot be empty.")
-				continue
-			}
-			addedTask := tracker.AddTask(description)
-			fmt.Printf("Task Added: %d - %s\n", addedTask.ID, addedTask.Description)
-		case 2:
-			fmt.Println(tracker.ListTasks())
-		case 3:
-			fmt.Print("Enter ID of task to mark as completed: ")
-			idStr := getUserInput()
-			id, err := strconv.Atoi(idStr)
-			if err != nil {
-				fmt.Println("Invalid ID. Please enter a valid number.")
-				continue
-			}
-			_, msg := tracker.CompleteTask(id)
-			fmt.Println(msg)
-
-		default:
-			fmt.Println("Invalid option. Please choose a number between 1 and 4.")
-
-		}
-	}
-
 	http.HandleFunc("GET /task", func(w http.ResponseWriter, r *http.Request) { httpListtask(w, r, tracker) })
 	http.HandleFunc("GET /task/{id}", func(w http.ResponseWriter, r *http.Request) { httpListbyId(w, r, tracker) })
 	http.HandleFunc("POST /task", func(w http.ResponseWriter, r *http.Request) { httppostTask(w, r, tracker) })

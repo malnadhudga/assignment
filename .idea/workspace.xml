@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed75f871-d04c-4e80-b59b-bdd6ea65a2dc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assign5/assign5_1/shape_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assign5/assign5_1/assign_5_1.go" beforeDir="false" afterPath="$PROJECT_DIR$/assign5/assign5_1/assign_5_1.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/go_linters.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
